@@ -1,6 +1,7 @@
 class MotivationalMessage {
     constructor() {
         this.message = "Work hard and be consistent";
+        this.message = "15 minutes a day and you are the best after 1 year";
     }
 
     printMessage() {
