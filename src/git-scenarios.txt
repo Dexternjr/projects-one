@@ -1,0 +1,174 @@
+Scenario 1
+==========
+You are a software developer working on a project with a team of developers. You have made several commits to your branch, but you realized that the last few commits were unnecessary and caused issues with the codebase. You want to revert those specific commits and apply the changes from a previous commit. However, you also want to keep the changes you made in the unnecessary commits in a separate branch for future reference. How can you use Git log, Git reset, revert, and branch commands to achieve this? 
+
+solution:
+-> git log (to identify commit id that harm the application)
+-> git git revert (essentially rewinds your local Git repository to a specific point in time(git reset --hard [commit-id] can be seen as undoing the last commit (and potentially subsequent commits))(remove unnecessary commit from the current branch to new branch))
+   git reset --hard [commit-id]
+
+-> git branch [branch-name] (create branch)
+-> git checkout [branch-name] #switch to the branch you want to save the commit
+-> git cherry pick [commit-id] #commit-id of the change you want keep
+-> git checkout
+
+
+
+
+Scenario 2
+==========
+You accidentally committed sensitive information to your Git repository. You want to remove the last two commits entirely without keeping any changes. How would you achieve this using git reset?
+
+solution:
+
+-> git log 
+-> git reset --hard head 2 (remove head and branch pointer by two commit)
+
+     git reset                         |      git revert
+---------------------------------------|---------------------------
+ alter commit history                  | create new commit history
+ (without creating new commit)         |                         
+ erase commit you make after a point   |
+  
+  
+  
+  
+Scenario 3
+==========
+You pushed a commit with a bug to the main branch of your project. The commit contains other changes that you want to keep. How can you undo just the changes introduced by that specific commit using git revert? 
+
+solutions:
+-> git log 
+-> git reset --hard 
+
+
+Scenario 4
+==========
+You have just finished a major release of your software and want to mark this specific commit as a release point. How can you create an annotated tag with a meaningful version number using git tag?
+
+solutions:
+-> git tag -a [version] -m "tag message"
+
+
+
+Scenario 5
+==========
+You accidentally committed a change to the wrong branch. How can you use rebase to move the commit to the correct branch?
+
+solutions:
+-> git log
+-> git branch -a
+-> git checkout [branch-name] #to go to the branch with the change
+-> git rebase [target-branch] (branch where you want to send the commit)
+
+
+
+Scenario 6
+==========
+Your team has been working on a project with multiple branches, and there's a critical bug fix commit on one branch that needs to be applied to another branch as well. How can you apply that specific commit from one branch to another using git cherry-pick?
+
+solutions:
+
+-> git log
+-> git checkout [branch-name] #branch with critical bug fix
+-> git cherry pick [commit-id] #commit-id of the change you want apply )
+
+
+
+Scenario 7
+==========
+You recently merged a feature branch into the main branch of your project, only to realize that the changes introduced conflicts with the existing codebase. To maintain the stability of the main branch, you need to undo the merge commit and resolve the conflicts properly before reattempting the merge.
+
+solutions:
+-> git log
+-> git revert <merge_commit_id> (This command will create a new commit that undoes the changes introduced by the merge commit while keeping the history intact.) #Undo the Merge Commit
+
+-> git checkout <feature_branch>
+   git merge <main_branch>
+#Resolve Conflicts Locally: After undoing the merge commit, I would switch back to the feature branch and resolve any conflicts between the feature branch and the main branch locally.
+
+->git checkout <main_branch>
+  git merge <feature_branch>
+#Reattempt Merge: After resolving conflicts and ensuring stability, I would attempt to merge the feature branch into the main branch again. This time, with conflicts resolved, the merge process should proceed smoothly.
+
+
+
+Scenario 8
+==========
+You have reached a significant milestone in your project and want to mark a specific commit as a stable release. Creating a tag for this commit will help you easily reference and track this version of your codebase. 
+
+solutions:
+-> git log #Identify the Commit: First, I would identify the specific commit that represents the milestone or stable release. This is typically the commit where all the features for the milestone are completed and the code is stable
+
+-> git tag -a v1.0 -m "Stable release for milestone X"
+-> git push origin v1.0 #Push the Tag: After creating the tag locally, I would push the tag to the remote repository so that it's accessible to other team members and for reference in the future.
+
+-> git tag #Verify the Tag:
+
+
+
+
+Scenario 9
+==========
+You've identified a bug fix commit in another branch that you need to apply to your current branch to address a similar issue. How would you do that?
+
+solutions:
+
+-> git log --grep "fix"   # Search for commits with "fix" in the message
+   git log --grep "bug"   # Search for commits with "bug" in the message
+ 
+#Identify the Bug Fix Commit: First, we need to identify the specific commit that fixes the bug in the other branch. This can be done by inspecting the commit history of that branch.
+
+-> git checkout <current_branch> #Switch to the branch where you want to apply the bug fix.
+-> git cherry-pick <bug_fix_commit_id> #apply the bug fix commit from the other branch onto the current branch
+-> git commit #Commit Changes:
+
+
+
+
+Scenario 10
+==========
+You've been working on a feature branch that has diverged from the main branch. You want to incorporate the latest changes from the main branch into your feature branch before merging it back. How can you rebase your branch onto the main branch and resolve any conflicts?
+
+solution:
+-> git checkout <feature_branch> #witch to the feature branch that needs to be rebased onto the main branch.
+-> git fetch origin #Fetch Latest Changes: Ensure that you have the latest changes from the main branch by fetching them from the remote repository.
+
+-> git rebase origin/main #rebase the feature branch onto the main branch.
+-> Commit Changes: After resolving conflicts, continue the rebase process by executing git rebase --continue if there were no conflicts or git commit if conflicts were resolved manually.
+
+-> git rebase --continue #Complete Rebase
+-> git push origin <feature_branch> --force #Push Changes: Finally, push the rebased feature branch to the remote repository
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
